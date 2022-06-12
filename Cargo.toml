@@ -11,7 +11,7 @@ description = """
 Dynamic implementation of the actor model with a smart built-in testing framework.
 """
 keywords = ["actor", "actors", "async", "tokio", "futures"]
-categories = ["Asynchronous", "Concurrency"]
+categories = ["asynchronous", "concurrency"]
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
