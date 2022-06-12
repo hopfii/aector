@@ -1,11 +1,11 @@
 [package]
 name = "aector"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 authors = ["hopfii"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/rust-random/rand"
+repository = "https://github.com/hopfii/aector"
 documentation = "https://docs.rs/aector"
 description = """
 Dynamic implementation of the actor model with a smart built-in testing framework.
