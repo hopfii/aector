@@ -1,0 +1,30 @@
+[package]
+name = "aector"
+version = "0.1.0"
+edition = "2021"
+
+authors = ["hopfii"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/rust-random/rand"
+documentation = "https://docs.rs/aector"
+description = """
+Dynamic implementation of the actor model with a smart built-in testing framework.
+"""
+keywords = ["actor", "actors", "async", "tokio", "futures"]
+categories = ["Asynchronous", "Concurrency"]
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+futures = "0.3.21"
+dashmap = "5.2.0"
+rand = "0.8.5"
+thiserror = "1.0.30"
+tracing = "0.1.34"
+
+[dev-dependencies]
+tracing-subscriber = {version="0.3.11", features=["env-filter"]}
+tracing-bunyan-formatter = "0.3.2"
+tracing-log = "0.1.2"
+tracing-appender = "0.2.2"
+
+
