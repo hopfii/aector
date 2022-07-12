@@ -1,53 +1,19 @@
-use std::cmp;
-use std::fs::File;
-use std::io::Write;
-use aector::actor::{Actor, MailboxType};
-use aector::actor_system::ActorSystem;
-use aector::Addr;
-use aector::behavior::{Behavior, BehaviorAction, BehaviorBuilder};
-use rand::rngs::ThreadRng;
-use rand_isaac::Isaac64Rng;
-use rand::SeedableRng;
-use rand::Rng;
-
-/*
-#Person.on_start:
-Person  ->  Grid: GetInitialPos
-Person  <-  Grid: InitPos(pos)
-Person  ->  Sim: InitDone
-
-if Sim received all inits: schedule ExecuteSimStep to self
-
-#ExecuteSimStep:
-Sim     ->  Sim:        ExecuteSimStep
-Sim     ->  Broadcast:  ExecuteStep
-Person  ->  Grid:       GetGrid
-Person  <-  Grid:       GridSnapshot
-
-# if Person.happy > Person.min_happy:
-Person  ->  Sim:        StepDone
-
-# else
-Person  ->  Grid:       RequestNewPos(old_pos)
-Person  <-  Grid:       NewPos(new_pos)
-Person  ->  Sim:        StepDone
-
-# Sim during step:
-Person  ->  Sim:        StepDone
-if #stepdones == #persons: sim step done
-else: #stepdones += 1
- */
-
+use std::time::Duration;
 use ABS_Schelling_no_ui::protocol::*;
 use ABS_Schelling_no_ui::sim::*;
 use ABS_Schelling_no_ui::grid::*;
 use ABS_Schelling_no_ui::person::*;
+use aector::actor::{Actor, MailboxType};
+use aector::actor_system::ActorSystem;
+use aector::Addr;
+use aector::behavior::{Behavior, BehaviorAction, BehaviorBuilder};
 use tokio::runtime::Builder;
+
 
 async fn run_bench_sim() {
 
     let actor_sys = ActorSystem::new();
-    let num_of_persons = 128000;
+    let num_of_persons = 2000;
     let neighbourhood_size = 5;
     let min_happiness = 0.6;
 
@@ -74,12 +40,11 @@ async fn run_bench_sim() {
     }
 
     actor_sys.start().await;
+    println!("done");
 }
 
-fn main() {
+fn run_sim() {
     let rt = Builder::new_multi_thread()
-        .worker_threads(10)
-        .thread_stack_size(2 * 1024 * 1024)
         .enable_time()
         .build()
         .unwrap();
@@ -89,4 +54,24 @@ fn main() {
     })
 }
 
+use criterion::{black_box, criterion_group, criterion_main, Criterion, Benchmark};
+use criterion::async_executor::AsyncExecutor;
+
+pub fn criterion_benchmark(c: &mut Criterion) {
+
+    //             .measurement_time(Duration::from_secs(100))
+    c.bench(
+        "bench",
+        Benchmark::new("schelling 100", |b| {
+            b.iter(|| run_sim());
+        })
+            .sample_size(20)
+    );
+
+}
+
+
+
+criterion_group!(benches, criterion_benchmark);
+criterion_main!(benches);
 

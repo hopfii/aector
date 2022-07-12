@@ -5,3 +5,7 @@ This example implements the Schelling segregation model using actors as agents w
   - src/lib.rs for grid-size
   - examples/run_abs_sim.rs for general simulation settings and parameters
 
+- Run benchmark of example:
+```console
+cargo bench
+```
