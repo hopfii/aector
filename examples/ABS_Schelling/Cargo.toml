@@ -11,10 +11,15 @@ tokio = { version = "1", features = ["full"] }
 rand = "0.8.5"
 rand_isaac = "0.3.0"
 
-[dependencies.sdl2]
+[target.'cfg(windows)'.dependencies.sdl2]
 version = "0.35"
 default-features = false
 features = ["ttf","image","gfx","mixer","static-link","use-vcpkg"]
+
+[target.'cfg(unix)'.dependencies.sdl2]
+version = "0.35"
+default-features = false
+features = ["ttf","image","gfx","mixer"]
 
 [package.metadata.vcpkg]
 dependencies = ["sdl2", "sdl2-image[libjpeg-turbo,tiff,libwebp]", "sdl2-ttf", "sdl2-gfx", "sdl2-mixer"]

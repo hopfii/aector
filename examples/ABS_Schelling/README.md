@@ -3,12 +3,19 @@ This example implements the Schelling segregation model using actors as agents. 
 
 # Prerequisites
 - SDL2 has to be installed in order to be able to run the UI. See https://github.com/Rust-SDL2/rust-sdl2 for further instructions/details.
-- Quick install and build of SDL2:
+- Quick install and build of SDL2 under Windows:
 ```console
 cargo install cargo-vcpkg
 cargo vcpkg build
 cargo build
 ```
+
+- Quick install and build of SDL2 under Ubuntu:
+```console
+sudo apt install libsdl2-dev libsdl2-mixer-dev libsdl2-gfx-dev libsdl2-ttf-dev libsdl2-image-dev
+cargo build
+```
+
 
 - Run example:
 ```console
